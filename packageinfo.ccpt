@@ -4,7 +4,7 @@
     comment = "Package tool for ComputerCraft/CC: Tweaked",
     author = "CCPT",
     website = "https://github.com/computercraft-package-tool/ccpt",
-    newestversion = "1.0",
+    newestversion = "1.1",
     dependencies = {
         pprint = "1.0"
     },
