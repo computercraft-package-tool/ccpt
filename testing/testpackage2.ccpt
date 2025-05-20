@@ -1,14 +1,14 @@
 {
     name = "testpackage2",
     comment = "Emtpy package to test cctp",
-    author = "PentagonLP",
-    website = "https://github.com/PentagonLP/ccpt",
+    author = "CCPT",
+    website = "https://github.com/computercraft-package-tool/ccpt",
     newestversion = "1.1",
     dependencies = {
 		testpackage3 = "1.0"
     },
     install = {
-        url = "https://raw.githubusercontent.com/PentagonLP/properprint/main/properprint",
+        url = "https://raw.githubusercontent.com/computercraft-package-tool/properprint/main/properprint",
 		filename = "testpackage2",
 		type = "library",
     }

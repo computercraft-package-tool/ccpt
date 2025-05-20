@@ -120,12 +120,12 @@ if (args[1]=="install") or (args[1]==nil) then
 	print("[Installer] Well, hello there!")
 	print("[Installer] Thank you for downloading the ComputerCraft Package Tool! Installing...")
 	print("[Installer] Installing 'properprint' library...")
-	if downloadfile("lib/properprint","https://raw.githubusercontent.com/PentagonLP/properprint/main/properprint")== false then
+	if downloadfile("lib/properprint","https://raw.githubusercontent.com/computercraft-package-tool/properprint/main/properprint")== false then
 		return false
 	end
 	print("[Installer] Successfully installed 'properprint'!")
 	print("[Installer] Installing 'ccpt'...")
-	if downloadfile("ccpt","https://raw.githubusercontent.com/PentagonLP/ccpt/main/ccpt")==false then
+	if downloadfile("ccpt","https://raw.githubusercontent.com/computercraft-package-tool/ccpt/main/ccpt")==false then
 		return false
 	end
 	print("[Installer] Successfully installed 'ccpt'!")
@@ -141,7 +141,7 @@ if (args[1]=="install") or (args[1]==nil) then
 	print("[Installer] 'ccpt' successfully installed!")
 elseif args[1]=="update" then
 	print("[Installer] Updating 'ccpt'...")
-	if downloadfile("ccpt","https://raw.githubusercontent.com/PentagonLP/ccpt/main/ccpt")==false then
+	if downloadfile("ccpt","https://raw.githubusercontent.com/computercraft-package-tool/ccpt/main/ccpt")==false then
 		return false
 	end
 elseif args[1]=="remove" then

@@ -1,15 +1,15 @@
 {
     name = "testpackage",
     comment = "This package does absolutly nothing!",
-    author = "PentagonLP",
-    website = "https://github.com/PentagonLP/ccpt",
+    author = "CCPT",
+    website = "https://github.com/computercraft-package-tool/ccpt",
     newestversion = "1.1",
     dependencies = {
 		testpackage2 = "1.1",
 		testpackage3 = "1.0"
     },
     install = {
-        url = "https://raw.githubusercontent.com/PentagonLP/ccpt/main/testing/testscript",
+        url = "https://raw.githubusercontent.com/computercraft-package-tool/ccpt/main/testing/testscript",
 		filename = "testpackage1",
 		type = "library"
     }
