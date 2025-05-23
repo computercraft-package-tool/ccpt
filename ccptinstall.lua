@@ -125,7 +125,7 @@ if (args[1]=="install") or (args[1]==nil) then
 	end
 	print("[Installer] Successfully installed 'properprint'!")
 	print("[Installer] Installing 'ccpt'...")
-	if downloadfile("ccpt","https://raw.githubusercontent.com/computercraft-package-tool/ccpt/main/ccpt")==false then
+	if downloadfile("ccpt","https://github.com/computercraft-package-tool/ccpt/releases/download/v1.0/ccpt")==false then
 		return false
 	end
 	print("[Installer] Successfully installed 'ccpt'!")
@@ -141,7 +141,7 @@ if (args[1]=="install") or (args[1]==nil) then
 	print("[Installer] 'ccpt' successfully installed!")
 elseif args[1]=="update" then
 	print("[Installer] Updating 'ccpt'...")
-	if downloadfile("ccpt","https://raw.githubusercontent.com/computercraft-package-tool/ccpt/main/ccpt")==false then
+	if downloadfile("ccpt","https://github.com/computercraft-package-tool/ccpt/releases/download/v1.0/ccpt")==false then
 		return false
 	end
 elseif args[1]=="remove" then

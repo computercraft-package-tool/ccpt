@@ -10,6 +10,6 @@
     },
     install = {
         type = "script",
-        scripturl = "https://raw.githubusercontent.com/computercraft-package-tool/ccpt/main/ccptinstall.lua"
+        scripturl = "https://github.com/computercraft-package-tool/ccpt/releases/download/v1.0/ccptinstall.lua"
     }
 }
