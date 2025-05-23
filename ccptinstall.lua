@@ -120,7 +120,7 @@ if (args[1]=="install") or (args[1]==nil) then
 	print("[Installer] Well, hello there!")
 	print("[Installer] Thank you for downloading the ComputerCraft Package Tool! Installing...")
 	print("[Installer] Installing 'properprint' library...")
-	if downloadfile("lib/properprint","https://raw.githubusercontent.com/computercraft-package-tool/properprint/main/properprint")== false then
+	if downloadfile("lib/properprint","https://github.com/computercraft-package-tool/properprint/releases/download/v1.0/properprint.lua")== false then
 		return false
 	end
 	print("[Installer] Successfully installed 'properprint'!")
