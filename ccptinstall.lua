@@ -6,8 +6,6 @@
 
 -- Read arguments
 args = {...}
--- Read branch or use main
-args[2] = args[2] or "main"
 
 -- FILE MANIPULATION FUNCTIONS --
 --[[ Checks if file exists
@@ -134,7 +132,8 @@ toInstall = {
 		path = "lib/httputils"
 	},
 	ccpt = {
-		url = "https://github.com/computercraft-package-tool/ccpt/releases/download/v1.0/ccpt",
+		-- Take in optional second argument to use custom path
+		url = args[2] or "https://github.com/computercraft-package-tool/ccpt/releases/download/v1.0/ccpt",
 		path = ".ccpt/program/ccpt"
 	}
 }
