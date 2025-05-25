@@ -130,7 +130,7 @@ toInstall = {
 		path = "lib/fileutils"
 	},
 	httputils = {
-		url = "https://github.com/computercraft-package-tool/httputils/releases/download/v1.0/fileutils.lua",
+		url = "https://github.com/computercraft-package-tool/httputils/releases/download/v1.0/httputils.lua",
 		path = "lib/httputils"
 	},
 	ccpt = {
