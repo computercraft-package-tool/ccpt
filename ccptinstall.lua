@@ -150,6 +150,7 @@ if (args[1]=="install") or (args[1]==nil) then
 		end
 		print("[Installer] Successfully installed '" .. k .. "'!")
 	end
+	shell.setPath(shell.path() .. ":.ccpt/program")
 	print("[Installer] Running 'ccpt update'...")
 	shell.run(toInstall["ccpt"]["path"],"update")
 	print("[Installer] Reading package data...")
@@ -169,8 +170,8 @@ elseif args[1]=="update" then
 elseif args[1]=="remove" then
 	print("[Installer] Uninstalling 'ccpt'...")
 	fs.delete("/.ccpt")
-	shell.setCompletionFunction("ccpt", nil)
-	shell.setPath(string.gsub(shell.path(),regexEscape(":.ccpt/program","")))
+	shell.setCompletionFunction("ccpt", function () end)
+	shell.setPath(string.gsub(shell.path(),regexEscape(":.ccpt/program"),""))
 	if file_exists("startup") then
 		print("[Installer] Removing 'ccpt' from startup...")
 		startup = readFile("startup","")
