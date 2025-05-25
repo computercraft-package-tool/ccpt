@@ -122,19 +122,19 @@ end
 
 toInstall = {
 	pprint = {
-		url = "https://raw.githubusercontent.com/computercraft-package-tool/properprint/main/properprint",
+		url = "https://github.com/computercraft-package-tool/properprint/releases/download/v1.0/properprint.lua",
 		path = "lib/properprint"
 	},
 	fileutils = {
-		url = "https://raw.githubusercontent.com/computercraft-package-tool/fileutils/main/fileutils",
+		url = "https://github.com/computercraft-package-tool/fileutils/releases/download/v1.0/fileutils.lua",
 		path = "lib/fileutils"
 	},
 	httputils = {
-		url = "https://raw.githubusercontent.com/computercraft-package-tool/httputils/main/httputils",
+		url = "https://github.com/computercraft-package-tool/httputils/releases/download/v1.0/fileutils.lua",
 		path = "lib/httputils"
 	},
 	ccpt = {
-		url = "https://raw.githubusercontent.com/computercraft-package-tool/ccpt/" .. args[2] .. "/ccpt.lua",
+		url = "https://github.com/computercraft-package-tool/ccpt/releases/download/v1.0/ccpt",
 		path = ".ccpt/program/ccpt"
 	}
 }

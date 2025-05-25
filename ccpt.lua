@@ -15,7 +15,7 @@ os.loadAPI("lib/httputils")
 args = {...}
 
 -- Link to a list of packages that are present by default (used in 'update()')
-defaultpackageurl = "https://raw.githubusercontent.com/computercraft-package-tool/ccpt/main/defaultpackages.ccpt"
+defaultpackageurl = "https://github.com/computercraft-package-tool/ccpt/releases/download/v1.0/defaultpackages.ccpt"
 
 -- Counters to print out at the very end
 installed = 0
