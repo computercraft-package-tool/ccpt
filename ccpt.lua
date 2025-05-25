@@ -876,7 +876,7 @@ shell.setCompletionFunction(".ccpt/program/ccpt", tabcomplete)
 -- Add to startup file to run at startup
 startup = fileutils.readFile("startup","") or ""
 if string.find(startup,"shell.run(\".ccpt/program/ccpt\",\"startup\")",1,true)==nil then
-	startup = "-- ccpt: Seach for updates\nshell.run(\".ccpt/program/ccpt\",\"startup\")\n\n" .. startup
+	startup = "-- ccpt: Search for updates\nshell.run(\".ccpt/program/ccpt\",\"startup\")\n\n" .. startup
 	fileutils.storeFile("startup",startup)
 	print("[Installer] Startup entry created!")
 end
