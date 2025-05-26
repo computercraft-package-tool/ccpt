@@ -15,7 +15,8 @@ end
 -- Complete action (eg. "update" or "list")
 function completeaction(curText)
 	local result = {}
-	for i,v in pairs(_G.ccpt.autocomplete) do
+	for i,v in pairs(_G.ccpt.subcommands) do
+        -- Autocomplete only commmands which also appear in 'ccpt help'
 		if (not (v["comment"] == nil)) then
 			result = addtoresultifitfits(i,curText,result)
 		end
@@ -28,7 +29,7 @@ autocompletepackagecache = {}
 function completepackageid(curText,filterstate)
 	local result = {}
 	if curText=="" or curText==nil then
-		local packagedata = fileutils.readData(fs.combine(fs.getDir(_G.ccpt.shell.getRunningProgram()),"../../packagedata"),false)
+		local packagedata = fileutils.readData(fs.combine(_G.ccpt.progdir,"packagedata"),false)
 		if not packagedata then
 			return {}
 		end
@@ -36,7 +37,7 @@ function completepackageid(curText,filterstate)
 	end
     local installedversion
 	if not (filterstate==nil) then
-		installedversion = fileutils.readData(fs.combine(fs.getDir(_G.ccpt.shell.getRunningProgram()),"../../installedpackages"),true)
+		installedversion = fileutils.readData(fs.combine(_G.ccpt.progdir,"installedpackages"),true)
 	end
 	for i,v in pairs(autocompletepackagecache) do
 		if filterstate=="installed" then
@@ -57,7 +58,7 @@ end
 -- Complete packageid, but only for custom packages, which is much simpler
 function completecustompackageid(curText)
 	local result = {}
-	local custompackages = fileutils.readData(fs.combine(fs.getDir(_G.ccpt.shell.getRunningProgram()),"../../custompackages"),true)
+	local custompackages = fileutils.readData(fs.combine(_G.ccpt.progdir,"custompackages"),true)
 	for i,v in pairs(custompackages) do
 		result = addtoresultifitfits(i,curText,result)
 	end
@@ -86,11 +87,9 @@ end
 
 -- MAIN AUTOCOMLETE FUNCTION --
 function tabcomplete(shell, parNumber, curText, lastText)
-	local result = {}
-	tabcompletehelper(
+	return tabcompletehelper(
 		{
-			ccpt = autocomplete
+			ccpt = _G.ccpt.autocomplete
 		},
-	lastText,curText or "",1)
-	return result
+	lastText, curText or "", 1)
 end

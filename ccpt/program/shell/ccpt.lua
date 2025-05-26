@@ -4,6 +4,13 @@
 	Version: 1.1
 ]]
 
+-- Initialize global ccpt namespace
+_G.ccpt = {}
+-- Set program directory
+_G.ccpt.progdir = fs.combine(fs.getDir(shell.getRunningProgram()), "../../")
+-- Pass shell onto submodules
+_G.ccpt.shell = shell
+
 -- Load properprint library
 os.loadAPI("lib/properprint")
 -- Load fileutils library
@@ -11,17 +18,15 @@ os.loadAPI("lib/fileutils")
 -- Load httputils library
 os.loadAPI("lib/httputils")
 
-dofile(fs.combine(fs.getDir(shell.getRunningProgram()),"../autocomplete.lua"))
-dofile(fs.combine(fs.getDir(shell.getRunningProgram()),"../counters.lua"))
-dofile(fs.combine(fs.getDir(shell.getRunningProgram()),"../misc.lua"))
-dofile(fs.combine(fs.getDir(shell.getRunningProgram()),"../package.lua"))
+dofile(fs.combine(_G.ccpt.progdir, "program/autocomplete.lua"))
+dofile(fs.combine(_G.ccpt.progdir, "program/counters.lua"))
+dofile(fs.combine(_G.ccpt.progdir, "program/misc.lua"))
+dofile(fs.combine(_G.ccpt.progdir, "program/package.lua"))
 
 -- Read arguments
 local args = {...}
 
 -- CONFIG ARRAYS --
-_G.ccpt = {}
-
 --[[ Array to store subcommands, help comment and function
 ]]--
 _G.ccpt.subcommands = {}
@@ -38,25 +43,23 @@ _G.ccpt.autocomplete = {
 	next = {}
 }
 
--- Pass shell onto submodules
-_G.ccpt.shell = shell
-
 -- Load variable submodules
 loadfolder("../subcommands")
 loadfolder("../installtypes")
 
 -- Add to working path
-if string.find(shell.path(),regexEscape(":.ccpt/program/shell"))==nil then
-	shell.setPath(shell.path()..":.ccpt/program/shell")
+local workingpathentry = ":" .. fs.combine(_G.ccpt.progdir, "program/shell")
+if string.find(shell.path(), regexEscape(workingpathentry)) == nil then
+	shell.setPath(shell.path() .. workingpathentry)
 end
 
 -- Register autocomplete function
-shell.setCompletionFunction(".ccpt/program/shell7ccpt.lua", tabcomplete)
+shell.setCompletionFunction(shell.getRunningProgram(), tabcomplete)
 
 -- Add to startup file to run at startup
 local startup = fileutils.readFile("startup","") or ""
-if string.find(startup,"shell.run(\".ccpt/program/ccpt\",\"startup\")",1,true)==nil then
-	startup = "-- ccpt: Search for updates\nshell.run(\".ccpt/program/ccpt\",\"startup\")\n\n" .. startup
+if string.find(startup,"shell.run(\"" .. shell.getRunningProgram() .. "\",\"startup\")",1,true)==nil then
+	startup = "-- ccpt: Search for updates\nshell.run(\"" .. shell.getRunningProgram() .. "\",\"startup\")\n\n" .. startup
 	fileutils.storeFile("startup",startup)
 	print("[Installer] Startup entry created!")
 end
