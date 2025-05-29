@@ -1,4 +1,6 @@
-function installscript(installdata)
+local script = {}
+
+function script.install(installdata)
 	local result = httputils.downloadfile(fs.combine(fs.getDir(_G.ccpt.shell.getRunningProgram()),"../../tempinstaller"),installdata["scripturl"])
 	if result==false then
 		return false
@@ -9,7 +11,7 @@ end
 
 --[[ Different install methodes require different update methodes
 ]]--
-function updatescript(installdata)
+function script.update(installdata)
 	local result = httputils.downloadfile(fs.combine(fs.getDir(_G.ccpt.shell.getRunningProgram()),"../../tempinstaller"),installdata["scripturl"])
 	if result==false then
 		return false
@@ -18,7 +20,7 @@ function updatescript(installdata)
 	fs.delete(fs.combine(fs.getDir(_G.ccpt.shell.getRunningProgram()),"../../tempinstaller"))
 end
 
-function removescript(installdata)
+function script.remove(installdata)
 	local result = httputils.downloadfile(fs.combine(fs.getDir(_G.ccpt.shell.getRunningProgram()),"../../tempinstaller"),installdata["scripturl"])
 	if result==false then
 		return false
@@ -27,9 +29,6 @@ function removescript(installdata)
 	fs.delete(fs.combine(fs.getDir(_G.ccpt.shell.getRunningProgram()),"../../tempinstaller"))
 end
 
-_G.ccpt.installtypes.script = {
-    install = installscript,
-    update = updatescript,
-    remove = removescript,
-    desc = "Programm installed via Installer"
-}
+script.desc = "Programm installed via Installer"
+
+return script

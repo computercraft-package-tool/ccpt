@@ -1,21 +1,22 @@
+local library = {}
+
 --[[ Different install methodes
 ]]--
-function installlibrary(installdata)
+function library.install(installdata)
 	local result = httputils.downloadfile("/lib/" .. installdata["filename"],installdata["url"])
 	if result==false then
 		return false
 	end
 end
 
+library.update = library.install
+
 --[[ Different install methodes require different uninstall methodes
 ]]--
-function removelibrary(installdata)
+function library.remove(installdata)
 	fs.delete("/lib/" .. installdata["filename"])
 end
 
-_G.ccpt.installtypes.library = {
-    install = installlibrary,
-    update = installlibrary,
-    remove = removelibrary,
-    desc = "Single file library"
-}
+library.desc = "Single file library"
+
+return library

@@ -1,16 +1,19 @@
 -- List
+local list = {}
+
 --[[ List all Packages 
 ]]--
-function list(args)
+function list.func(args)
 	-- Read data
 	print("Reading all packages data...")
-	if not fs.exists(fs.combine(fs.getDir(_G.ccpt.shell.getRunningProgram()),"../../packagedata")) then
+	if not fs.exists(fs.combine(_G.ccpt.progdir, "packagedata")) then
 		properprint.pprint("No Packages found. Please run 'cctp update' first.'")
 		return
 	end
-	local packagedata = fileutils.readData(fs.combine(fs.getDir(_G.ccpt.shell.getRunningProgram()),"../../packagedata"),true)
+	local packagedata = fileutils.readData(fs.combine(_G.ccpt.progdir, "packagedata"),true)
 	print("Reading Installed packages...")
-	local installedpackages = fileutils.readData(fs.combine(fs.getDir(_G.ccpt.shell.getRunningProgram()),"../../installedpackages"),true)
+	local installedpackages = fileutils.readData(fs.combine(_G.ccpt.progdir, "installedpackages"),true)
+
 	-- Print list
 	properprint.pprint("List of all known Packages:")
 	for k,v in pairs(installedpackages) do
@@ -29,7 +32,6 @@ function list(args)
 	end
 end
 
-_G.ccpt.subcommands.list = {
-    func = list,
-    comment = "List installed and able to install Packages"
-}
+list.comment = "List installed and able to install Packages"
+
+return list

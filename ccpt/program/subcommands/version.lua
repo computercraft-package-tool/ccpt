@@ -1,14 +1,15 @@
 -- Version
+local version = {}
+
 --[[ Print Version
 ]]--
-function version(args)
+function version.func(args)
 	-- Print version
 	properprint.pprint("ComputerCraft Package Tool")
 	properprint.pprint("by PentagonLP")
 	properprint.pprint("Version: 1.0")
 end
 
-_G.ccpt.subcommands.version = {
-    func = version,
-    comment = "Print CCPT Version"
-}
+version.comment = "Print CCPT Version"
+
+return version

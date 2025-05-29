@@ -1,12 +1,12 @@
 -- Idk randomly appeared one day
+local zzzzzz = {}
+
 --[[ Fuse
 ]]--
-function zzzzzz(args)
+function zzzzzz.func(args)
 	properprint.pprint("The 'ohnosecond':")
 	properprint.pprint("The 'ohnosecond' is the fraction of time between making a mistake and realizing it.")
 	properprint.pprint("(Oh, and please fix the hole you've created)")
 end
 
-_G.ccpt.subcommands.zzzzzz = {
-    func = zzzzzz
-}
+return zzzzzz

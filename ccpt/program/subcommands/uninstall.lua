@@ -1,12 +1,47 @@
 -- Uninstall
+local autocomplete_helpers_subcommands = dofile(fs.combine(_G.ccpt.progdir, "program/autocomplete/autocomplete_helpers_subcommands.lua"))
+local misc = dofile(fs.combine(_G.ccpt.progdir, "program/misc.lua"))
+local package = dofile(fs.combine(_G.ccpt.progdir, "program/package.lua"))
+local statcounters = dofile(fs.combine(_G.ccpt.progdir, "program/statcounters.lua"))
+
+local installtypes = misc.loadfolder("program/installtypes")
+
+local uninstall = {}
+
+--[[ Recursive function to find all Packages that are dependend on the one we want to remove to also remove them
+]]--
+local function getpackagestoremove(packageid,packageinfo,installedpackages,packagestoremove)
+	packagestoremove[packageid] = true
+	-- Get Packageinfo
+	if (packageinfo==nil) then
+		print("Reading packageinfo of '" .. packageid .. "'...")
+		packageinfo = package.getpackagedata(packageid)
+		if packageinfo==false then
+			return false
+		end
+	end
+	
+	-- Check packages that are dependend on that said package
+	for k,v in pairs(installedpackages) do
+		if not (package.getpackagedata(k)["dependencies"][packageid]==nil) then
+			local packagestoremovenew = getpackagestoremove(k,nil,installedpackages,packagestoremove)
+			for l,w in pairs(packagestoremovenew) do
+				packagestoremove[l] = true
+			end
+		end
+	end
+	
+	return packagestoremove
+end
+
 -- Remove installed Packages
-function uninstall(args)
+function uninstall.func(args)
 	-- Check input
 	if args[2] == nil then
 		properprint.pprint("Incomplete command, missing: 'Package ID'; Syntax: 'ccpt uninstall <PackageID>'")
 		return
 	end
-	local packageinfo = getpackagedata(args[2])
+	local packageinfo = package.getpackagedata(args[2])
 	if packageinfo == false then
 		return
 	end
@@ -28,13 +63,13 @@ function uninstall(args)
 	if not (#packagestoremovestring==0) then
 		properprint.pprint("There are installed packages that depend on the package you want to uninstall: " .. packagestoremovestring)
 		properprint.pprint("These packages will be removed if you proceed. Are you sure you want to continue? [y/n]:")
-		if ynchoice() == false then
+		if misc.ynchoice() == false then
 			return
 		end
 	else
 		properprint.pprint("There are no installed packages that depend on the package you want to uninstall.")
 		properprint.pprint("'" .. args[2] .. "' will be removed if you proceed. Are you sure you want to continue? [y/n]:")
-		if ynchoice() == false then
+		if misc.ynchoice() == false then
 			return
 		end
 	end
@@ -48,7 +83,7 @@ function uninstall(args)
 				properprint.pprint("You are about to uninstall the package tool itself, because it depends one or more package that is removed. You won't be able to install or uninstall stuff using the tool afterwords (obviously). Are you sure you want to continue? [y/n]:")
 			end
 			
-			if ynchoice() == false then
+			if misc.ynchoice() == false then
 				return
 			end
 			break
@@ -58,8 +93,8 @@ function uninstall(args)
 	-- Uninstall package(s)
 	for k,v in pairs(packagestoremove) do
 		print("Uninstalling '" .. k .. "'...")
-		local installdata = getpackagedata(k)["install"]
-		local result = _G.ccpt.installtypes[installdata["type"]]["remove"](installdata)
+		local installdata = package.getpackagedata(k)["install"]
+		local result = installtypes[installdata["type"]]["remove"](installdata)
 		if result==false then
 			return false
 		end
@@ -67,42 +102,15 @@ function uninstall(args)
 		installedpackages[k] = nil
 		fileutils.storeData(fs.combine(fs.getDir(_G.ccpt.shell.getRunningProgram()),"../../installedpackages"),installedpackages)
 		print("'" .. k .. "' successfully uninstalled!")
-		increasecounter("removed", 1)
+		statcounters.increasecounter("removed", 1)
 	end
 end
 
---[[ Recursive function to find all Packages that are dependend on the one we want to remove to also remove them
-]]--
-function getpackagestoremove(packageid,packageinfo,installedpackages,packagestoremove)
-	packagestoremove[packageid] = true
-	-- Get Packageinfo
-	if (packageinfo==nil) then
-		print("Reading packageinfo of '" .. packageid .. "'...")
-		packageinfo = getpackagedata(packageid)
-		if packageinfo==false then
-			return false
-		end
-	end
-	
-	-- Check packages that are dependend on that said package
-	for k,v in pairs(installedpackages) do
-		if not (getpackagedata(k)["dependencies"][packageid]==nil) then
-			local packagestoremovenew = getpackagestoremove(k,nil,installedpackages,packagestoremove)
-			for l,w in pairs(packagestoremovenew) do
-				packagestoremove[l] = true
-			end
-		end
-	end
-	
-	return packagestoremove
-end
+uninstall.comment = "Remove installed Packages"
 
-_G.ccpt.subcommands.uninstall = {
-    func = uninstall,
-    comment = "Remove installed Packages"
-}
-
-_G.ccpt.autocomplete.next.uninstall = {
-    func = completepackageid,
+uninstall.autocomplete = {
+    func = autocomplete_helpers_subcommands.completepackageid,
     funcargs = {"installed"}
 }
+
+return uninstall

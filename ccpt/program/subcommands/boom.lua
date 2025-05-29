@@ -1,6 +1,8 @@
 --[[ Explode
 ]]--
-function boom(args)
+local boom = {}
+
+function boom.func(args)
 	print("|--------------|")
 	print("| |-|      |-| |")
 	print("|    |----|    |")
@@ -11,6 +13,4 @@ function boom(args)
 	print("....\"Have you exploded today?\"...")
 end
 
-_G.ccpt.subcommands.boom = {
-    func = boom
-}
+return boom

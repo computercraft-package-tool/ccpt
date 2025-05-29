@@ -1,17 +1,19 @@
 -- MISC HELPER FUNCTIONS --
+local misc = {}
+
 --[[ Checks wether a String starts with another one
 	@param String haystack: String to check wether is starts with another one
 	@param String needle: String to check wether another one starts with it
 	@return boolean result: Wether the firest String starts with the second one
 ]]--
-function startsWith(haystack,needle)
+function misc.startsWith(haystack,needle)
 	return string.sub(haystack,1,string.len(needle))==needle
 end
 
 --[[ Presents a choice in console to wich the user can anser with 'y' ('yes') or 'n' ('no'). Captialisation doesn't matter.
 	@return boolean choice: The users choice
 ]]--
-function ynchoice()
+function misc.ynchoice()
 	while true do
 		local input = io.read()
 		if (input=="y") or (input == "Y") then
@@ -28,7 +30,7 @@ end
 	@param String text: Text to print
 	@param boolean booleantocheck: Boolean wether not to print
 ]]--
-function bprint(text, booleantocheck)
+function misc.bprint(text, booleantocheck)
 	if not booleantocheck then
 		properprint.pprint(text)
 	end
@@ -39,7 +41,7 @@ end
 	@param boolean|nil iterator|nil: If true, not the content but the address of the content within the array is converted to a string
 	@return String convertedstring: The String biult from the array
 ]]--
-function arraytostring(array,iterator)
+function misc.arraytostring(array,iterator)
 	iterator = iterator or false
 	local result = ""
 	if iterator then
@@ -54,12 +56,33 @@ function arraytostring(array,iterator)
 	return result
 end
 
-function regexEscape(str)
+function misc.regexEscape(str)
 	return str:gsub("[%(%)%.%%%+%-%*%?%[%^%$%]]", "%%%1")
 end
 
-function loadfolder(path)
-    for i, v in ipairs(fs.list(fs.combine(fs.getDir(_G.ccpt.shell.getRunningProgram()), path))) do
-        dofile(fs.combine(fs.combine(fs.getDir(_G.ccpt.shell.getRunningProgram()), path), v))
+function misc.splitstr(inputstr, sep)
+    if sep == nil then
+      sep = "%s"
     end
+    local t = {}
+    for str in string.gmatch(inputstr, "([^"..sep.."]+)") do
+      table.insert(t, str)
+    end
+    return t
 end
+
+function misc.loadfolder(relfolderpath, excludefiles)
+    excludefiles = excludefiles or {}
+
+    local absfolderpath = fs.combine(_G.ccpt.progdir, relfolderpath)
+    local modules = {}
+    for i, v in ipairs(fs.list(absfolderpath)) do
+        local modulename = misc.splitstr(v, ".")[1]
+        if excludefiles[modulename] == nil then
+            modules[modulename] = dofile(fs.combine(absfolderpath, v))
+        end
+    end
+    return modules
+end
+
+return misc

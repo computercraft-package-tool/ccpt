@@ -10,6 +10,8 @@ _G.ccpt = {}
 _G.ccpt.progdir = fs.combine(fs.getDir(shell.getRunningProgram()), "../../")
 -- Pass shell onto submodules
 _G.ccpt.shell = shell
+-- Initialize statcouters array
+_G.ccpt.statcounters = {}
 
 -- Load properprint library
 os.loadAPI("lib/properprint")
@@ -18,43 +20,24 @@ os.loadAPI("lib/fileutils")
 -- Load httputils library
 os.loadAPI("lib/httputils")
 
-dofile(fs.combine(_G.ccpt.progdir, "program/autocomplete.lua"))
-dofile(fs.combine(_G.ccpt.progdir, "program/counters.lua"))
-dofile(fs.combine(_G.ccpt.progdir, "program/misc.lua"))
-dofile(fs.combine(_G.ccpt.progdir, "program/package.lua"))
+local autocomplete = dofile(fs.combine(_G.ccpt.progdir, "program/autocomplete/autocomplete.lua"))
+local misc = dofile(fs.combine(_G.ccpt.progdir, "program/misc.lua"))
+local statcounters = dofile(fs.combine(_G.ccpt.progdir, "program/statcounters.lua"))
 
 -- Read arguments
 local args = {...}
 
--- CONFIG ARRAYS --
---[[ Array to store subcommands, help comment and function
-]]--
-_G.ccpt.subcommands = {}
-
---[[ Array to store different installation methodes and corresponding functions
-]]--
-_G.ccpt.installtypes = {}
-
---[[ Array to store autocomplete information
-]]--
-_G.ccpt.autocomplete = {
-	func = completeaction,
-	funcargs = {},
-	next = {}
-}
-
--- Load variable submodules
-loadfolder("../subcommands")
-loadfolder("../installtypes")
+-- Load variable submodules for subcommands
+local subcommands = misc.loadfolder("program/subcommands")
 
 -- Add to working path
 local workingpathentry = ":" .. fs.combine(_G.ccpt.progdir, "program/shell")
-if string.find(shell.path(), regexEscape(workingpathentry)) == nil then
+if string.find(shell.path(), misc.regexEscape(workingpathentry)) == nil then
 	shell.setPath(shell.path() .. workingpathentry)
 end
 
 -- Register autocomplete function
-shell.setCompletionFunction(shell.getRunningProgram(), tabcomplete)
+shell.setCompletionFunction(shell.getRunningProgram(), autocomplete.tabcomplete)
 
 -- Add to startup file to run at startup
 local startup = fileutils.readFile("startup","") or ""
@@ -68,12 +51,12 @@ end
 if #args==0 then
 	properprint.pprint("Incomplete command, missing: 'Action'; Type 'ccpt help' for syntax.")
 else
-	if _G.ccpt.subcommands[args[1]]==nil then
+	if subcommands[args[1]]==nil then
 		properprint.pprint("Action '" .. args[1] .. "' is unknown. Type 'ccpt help' for syntax.")
 	else
-		_G.ccpt.subcommands[args[1]]["func"](args)
+		subcommands[args[1]]["func"](args)
 	end
 end
 
 -- List stats of operations in this run
-printcounters()
+statcounters.printcounters()

@@ -1,35 +1,21 @@
 -- Install
---[[ Install a Package 
-]]--
-function install(args)
-	if args[2] == nil then
-		properprint.pprint("Incomplete command, missing: 'Package ID'; Syntax: 'ccpt install <PackageID>'")
-		return
-	end
-	local packageinfo = getpackagedata(args[2])
-	if packageinfo == false then
-		return
-	end
-	if packageinfo["status"] == "installed" then
-		properprint.pprint("Package '" .. args[2] .. "' is already installed.")
-		return
-	end
-	-- Ok, all clear, lets get installing!
-	local result = installpackage(args[2],packageinfo)
-	if result==false then
-		return
-	end
-	print("Install of '" .. args[2] .. "' complete!")
-end
+local autocomplete_helpers_subcommands = dofile(fs.combine(_G.ccpt.progdir, "program/autocomplete/autocomplete_helpers_subcommands.lua"))
+local misc = dofile(fs.combine(_G.ccpt.progdir, "program/misc.lua"))
+local package = dofile(fs.combine(_G.ccpt.progdir, "program/package.lua"))
+local statcounters = dofile(fs.combine(_G.ccpt.progdir, "program/statcounters.lua"))
+
+local installtypes = misc.loadfolder("program/installtypes")
+
+local install = {}
 
 --[[ Recursive function to install Packages and dependencies
 ]]--
-function installpackage(packageid,packageinfo)
+local function installpackage(packageid,packageinfo)
 	properprint.pprint("Installing '" .. packageid .. "'...")
 	-- Get Packageinfo
 	if (packageinfo==nil) then
 		print("Reading packageinfo of '" .. packageid .. "'...")
-		packageinfo = getpackagedata(packageid)
+		packageinfo = package.getpackagedata(packageid)
 		if packageinfo==false then
 			return false
 		end
@@ -53,7 +39,7 @@ function installpackage(packageid,packageinfo)
 	-- Install package
 	print("Installing '" .. packageid .. "'...")
 	local installdata = packageinfo["install"]
-	local result = _G.ccpt.installtypes[installdata["type"]]["install"](installdata)
+	local result = installtypes[installdata["type"]]["install"](installdata)
 	if result==false then
 		return false
 	end
@@ -61,15 +47,36 @@ function installpackage(packageid,packageinfo)
 	installedpackages[packageid] = packageinfo["newestversion"]
 	fileutils.storeData(fs.combine(fs.getDir(_G.ccpt.shell.getRunningProgram()),"../../installedpackages"),installedpackages)
 	print("'" .. packageid .. "' successfully installed!")
-	increasecounter("installed", 1)
+	statcounters.increasecounter("installed", 1)
 end
 
-_G.ccpt.subcommands.install = {
-    func = install,
-    comment = "Install new Packages"
-}
+--[[ Install a Package 
+]]--
+function install.func(args)
+	if args[2] == nil then
+		properprint.pprint("Incomplete command, missing: 'Package ID'; Syntax: 'ccpt install <PackageID>'")
+		return
+	end
+	local packageinfo = package.getpackagedata(args[2])
+	if packageinfo == false then
+		return
+	end
+	if packageinfo["status"] == "installed" then
+		properprint.pprint("Package '" .. args[2] .. "' is already installed.")
+		return
+	end
+	-- Ok, all clear, lets get installing!
+	local result = installpackage(args[2],packageinfo)
+	if result==false then
+		return
+	end
+	print("Install of '" .. args[2] .. "' complete!")
+end
 
-_G.ccpt.autocomplete.next.install = {
-    func = completepackageid,
+install.comment = "Install new Packages"
+install.autocomplete = {
+    func = autocomplete_helpers_subcommands.completepackageid,
     funcargs = {"not installed"}
 }
+
+return install
