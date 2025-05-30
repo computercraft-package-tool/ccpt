@@ -1,3 +1,5 @@
+local httputils = dofile("lib/httputils.lua")
+
 local script = {}
 
 function script.install(installdata)

@@ -13,15 +13,10 @@ _G.ccpt.shell = shell
 -- Initialize statcouters array
 _G.ccpt.statcounters = {}
 
--- Load properprint library
-os.loadAPI("lib/properprint")
--- Load fileutils library
-os.loadAPI("lib/fileutils")
--- Load httputils library
-os.loadAPI("lib/httputils")
-
 local autocomplete = dofile(fs.combine(_G.ccpt.progdir, "program/autocomplete/autocomplete.lua"))
+local fileutils = dofile("lib/fileutils.lua")
 local misc = dofile(fs.combine(_G.ccpt.progdir, "program/misc.lua"))
+local properprint = dofile("lib/properprint.lua")
 local statcounters = dofile(fs.combine(_G.ccpt.progdir, "program/statcounters.lua"))
 
 -- Read arguments

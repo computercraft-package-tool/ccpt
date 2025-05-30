@@ -1,5 +1,7 @@
 -- PACKAGE FUNCTIONS --
+local fileutils = dofile("lib/fileutils.lua")
 local misc = dofile(fs.combine(_G.ccpt.progdir, "program/misc.lua"))
+local properprint = dofile("lib/properprint.lua")
 
 local package = {}
 
@@ -68,9 +70,9 @@ function package.checkforupdates(installedpackages,reducedprint)
 	if #packageswithupdates==0 then
 		misc.bprint("All installed packages are up to date!",reducedprint)
 	elseif #packageswithupdates==1 then
-		print("There is 1 package with a newer version availible: " .. arraytostring(packageswithupdates))
+		print("There is 1 package with a newer version availible: " .. misc.arraytostring(packageswithupdates))
 	else
-		print("There are " .. #packageswithupdates .." packages with a newer version availible: " .. arraytostring(packageswithupdates))
+		print("There are " .. #packageswithupdates .." packages with a newer version availible: " .. misc.arraytostring(packageswithupdates))
 	end
 	
 	return packageswithupdates

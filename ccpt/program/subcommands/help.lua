@@ -1,5 +1,6 @@
 -- Help
 local misc = dofile(fs.combine(_G.ccpt.progdir, "program/misc.lua"))
+local properprint = dofile("lib/properprint.lua")
 
 local subcommands = misc.loadfolder("program/subcommands", {help = true})
 

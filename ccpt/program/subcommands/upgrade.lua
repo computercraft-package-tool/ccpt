@@ -1,7 +1,9 @@
 -- Upgrade
+local fileutils = dofile("lib/fileutils.lua")
 local install = dofile(fs.combine(_G.ccpt.progdir, "program/subcommands/install.lua"))
 local misc = dofile(fs.combine(_G.ccpt.progdir, "program/misc.lua"))
 local package = dofile(fs.combine(_G.ccpt.progdir, "program/package.lua"))
+local properprint = dofile("lib/properprint.lua")
 local statcounters = dofile(fs.combine(_G.ccpt.progdir, "program/statcounters.lua"))
 
 local installtypes = misc.loadfolder("program/installtypes")

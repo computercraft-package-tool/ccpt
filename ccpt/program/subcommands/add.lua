@@ -1,5 +1,7 @@
 -- Add
+local fileutils = dofile("lib/fileutils.lua")
 local misc = dofile(fs.combine(_G.ccpt.progdir, "program/misc.lua"))
+local properprint = dofile("lib/properprint.lua")
 local update = dofile(fs.combine(_G.ccpt.progdir, "program/subcommands/update.lua"))
 
 local add = {}

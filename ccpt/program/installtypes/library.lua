@@ -1,3 +1,5 @@
+local httputils = dofile("lib/httputils.lua")
+
 local library = {}
 
 --[[ Different install methodes

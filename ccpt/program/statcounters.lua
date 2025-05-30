@@ -1,3 +1,5 @@
+local properprint = dofile("lib/properprint.lua")
+
 local statcounters = {}
 
 local printorder = {"installed", "updated", "removed"}

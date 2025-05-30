@@ -1,7 +1,9 @@
 -- Uninstall
 local autocomplete_helpers_subcommands = dofile(fs.combine(_G.ccpt.progdir, "program/autocomplete/autocomplete_helpers_subcommands.lua"))
+local fileutils = dofile("lib/fileutils.lua")
 local misc = dofile(fs.combine(_G.ccpt.progdir, "program/misc.lua"))
 local package = dofile(fs.combine(_G.ccpt.progdir, "program/package.lua"))
+local properprint = dofile("lib/properprint.lua")
 local statcounters = dofile(fs.combine(_G.ccpt.progdir, "program/statcounters.lua"))
 
 local installtypes = misc.loadfolder("program/installtypes")

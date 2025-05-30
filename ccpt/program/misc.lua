@@ -1,4 +1,6 @@
 -- MISC HELPER FUNCTIONS --
+local properprint = dofile("lib/properprint.lua")
+
 local misc = {}
 
 --[[ Checks wether a String starts with another one

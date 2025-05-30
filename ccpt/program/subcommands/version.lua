@@ -1,4 +1,6 @@
 -- Version
+local properprint = dofile("lib/properprint.lua")
+
 local version = {}
 
 --[[ Print Version

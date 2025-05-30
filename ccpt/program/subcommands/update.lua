@@ -1,6 +1,9 @@
 -- Update
 local misc = dofile(fs.combine(_G.ccpt.progdir, "program/misc.lua"))
+local fileutils = dofile("lib/fileutils.lua")
+local httputils = dofile("lib/httputils.lua")
 local package = dofile(fs.combine(_G.ccpt.progdir, "program/package.lua"))
+local properprint = dofile("lib/properprint.lua")
 
 local update = {}
 
