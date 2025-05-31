@@ -27,6 +27,9 @@ local function getpackagestoremove(packageid,packageinfo,installedpackages,packa
 	for k,v in pairs(installedpackages) do
 		if not (package.getpackagedata(k)["dependencies"][packageid]==nil) then
 			local packagestoremovenew = getpackagestoremove(k,nil,installedpackages,packagestoremove)
+			if not (type(packagestoremovenew) == "table") then
+				return packagestoremovenew
+			end
 			for l,w in pairs(packagestoremovenew) do
 				packagestoremove[l] = true
 			end
@@ -54,6 +57,9 @@ function uninstall.func(args)
 	
 	-- Check witch package(s) to remove (A package dependend on a package that's about to get removed is also removed)
 	local packagestoremove = getpackagestoremove(args[2],packageinfo,fileutils.readData(fs.combine(fs.getDir(_G.ccpt.shell.getRunningProgram()),"../../installedpackages"),true),{})
+	if not (type(packagestoremove) == "table") then
+		return packagestoremove
+	end
 	local packagestoremovestring = ""
 	for k,v in pairs(packagestoremove) do
 		if not (k==args[2]) then
