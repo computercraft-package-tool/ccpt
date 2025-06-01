@@ -22,7 +22,7 @@ function upgradeinstall.installpackage(packageid,packageinfo)
 	-- Install dependencies
 	properprint.pprint("Installing dependencies of '" .. packageid .. "', if there are any...")
 	for k,v in pairs(packageinfo["dependencies"]) do
-		local installedpackages = fileutils.readData(fs.combine(fs.getDir(_G.ccpt.shell.getRunningProgram()),"../../installedpackages"),true)
+		local installedpackages = fileutils.readData(fs.combine(_G.ccpt.progdir,"installedpackages"),true)
 		if installedpackages[k] == nil then
 			if upgradeinstall.installpackage(k,nil)==false then
 				return false
@@ -41,9 +41,9 @@ function upgradeinstall.installpackage(packageid,packageinfo)
 	if result==false then
 		return false
 	end
-	local installedpackages = fileutils.readData(fs.combine(fs.getDir(_G.ccpt.shell.getRunningProgram()),"../../installedpackages"),true)
+	local installedpackages = fileutils.readData(fs.combine(_G.ccpt.progdir,"installedpackages"),true)
 	installedpackages[packageid] = packageinfo["newestversion"]
-	fileutils.storeData(fs.combine(fs.getDir(_G.ccpt.shell.getRunningProgram()),"../../installedpackages"),installedpackages)
+	fileutils.storeData(fs.combine(_G.ccpt.progdir,"installedpackages"),installedpackages)
 	print("'" .. packageid .. "' successfully installed!")
 	statcounters.increasecounter("installed", 1)
 end
@@ -60,7 +60,7 @@ function upgradeinstall.upgradepackage(packageid,packageinfo)
 		end
 	end
 	
-	local installedpackages = fileutils.readData(fs.combine(fs.getDir(_G.ccpt.shell.getRunningProgram()),"../../installedpackages"),true)
+	local installedpackages = fileutils.readData(fs.combine(_G.ccpt.progdir,"installedpackages"),true)
 	if installedpackages[packageid]==packageinfo["newestversion"] then
 		properprint.pprint("'" .. packageid .. "' already updated! Skipping... (This is NOT an error)")
 		return true
@@ -71,7 +71,7 @@ function upgradeinstall.upgradepackage(packageid,packageinfo)
 	-- Install/Update dependencies
 	properprint.pprint("Updating or installing new dependencies of '" .. packageid .. "', if there are any...")
 	for k,v in pairs(packageinfo["dependencies"]) do
-		installedpackages = fileutils.readData(fs.combine(fs.getDir(_G.ccpt.shell.getRunningProgram()),"../../installedpackages"),true)
+		installedpackages = fileutils.readData(fs.combine(_G.ccpt.progdir,"installedpackages"),true)
 		if installedpackages[k] == nil then
 			if upgradeinstall.installpackage(k,nil)==false then
 				return false
@@ -90,9 +90,9 @@ function upgradeinstall.upgradepackage(packageid,packageinfo)
 	if result==false then
 		return false
 	end
-	installedpackages = fileutils.readData(fs.combine(fs.getDir(_G.ccpt.shell.getRunningProgram()),"../../installedpackages"),true)
+	installedpackages = fileutils.readData(fs.combine(_G.ccpt.progdir,"installedpackages"),true)
 	installedpackages[packageid] = packageinfo["newestversion"]
-	fileutils.storeData(fs.combine(fs.getDir(_G.ccpt.shell.getRunningProgram()),"../../installedpackages"),installedpackages)
+	fileutils.storeData(fs.combine(_G.ccpt.progdir,"installedpackages"),installedpackages)
 	print("'" .. packageid .. "' successfully updated!")
 	statcounters.increasecounter("upgraded", 1)
 end

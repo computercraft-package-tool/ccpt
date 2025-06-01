@@ -56,7 +56,7 @@ function uninstall.func(args)
 	end
 	
 	-- Check witch package(s) to remove (A package dependend on a package that's about to get removed is also removed)
-	local packagestoremove = getpackagestoremove(args[2],packageinfo,fileutils.readData(fs.combine(fs.getDir(_G.ccpt.shell.getRunningProgram()),"../../installedpackages"),true),{})
+	local packagestoremove = getpackagestoremove(args[2],packageinfo,fileutils.readData(fs.combine(_G.ccpt.progdir,"installedpackages"),true),{})
 	if not (type(packagestoremove) == "table") then
 		return packagestoremove
 	end
@@ -106,9 +106,9 @@ function uninstall.func(args)
 		if result==false then
 			return false
 		end
-		local installedpackages = fileutils.readData(fs.combine(fs.getDir(_G.ccpt.shell.getRunningProgram()),"../../installedpackages"),true)
+		local installedpackages = fileutils.readData(fs.combine(_G.ccpt.progdir,"installedpackages"),true)
 		installedpackages[k] = nil
-		fileutils.storeData(fs.combine(fs.getDir(_G.ccpt.shell.getRunningProgram()),"../../installedpackages"),installedpackages)
+		fileutils.storeData(fs.combine(_G.ccpt.progdir,"installedpackages"),installedpackages)
 		print("'" .. k .. "' successfully uninstalled!")
 		statcounters.increasecounter("removed", 1)
 	end

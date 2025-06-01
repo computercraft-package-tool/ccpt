@@ -11,7 +11,7 @@ local upgrade = {}
 -- Upgrade installed Packages
 -- TODO: Single package updates
 function upgrade.func(args)
-	local packageswithupdates = package.checkforupdates(fileutils.readData(fs.combine(fs.getDir(_G.ccpt.shell.getRunningProgram()),"../../installedpackages"),true),false)
+	local packageswithupdates = package.checkforupdates(fileutils.readData(fs.combine(_G.ccpt.progdir,"installedpackages"),true),false)
 	if packageswithupdates==false then
 		return
 	end

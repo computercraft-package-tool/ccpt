@@ -16,7 +16,7 @@ function remove.func(args)
 		properprint.pprint("Incomplete command, missing: 'Package ID'; Syntax: 'ccpt remove <PackageID>'")
 		return
 	end
-	local custompackages = fileutils.readData(fs.combine(fs.getDir(_G.ccpt.shell.getRunningProgram()),"../../custompackages"),true)
+	local custompackages = fileutils.readData(fs.combine(_G.ccpt.progdir,"custompackages"),true)
 	if custompackages[args[2]]==nil then
 		properprint.pprint("A custom package with the id '" .. args[2] .. "' does not exist!")
 		return
@@ -31,7 +31,7 @@ function remove.func(args)
 
 	-- Remove entry from custompackages file
 	custompackages[args[2]] = nil
-	fileutils.storeData(fs.combine(fs.getDir(_G.ccpt.shell.getRunningProgram()),"../../custompackages"),custompackages)
+	fileutils.storeData(fs.combine(_G.ccpt.progdir,"custompackages"),custompackages)
 	properprint.pprint("Custom package successfully removed!")
 
 	-- Update packagedata?

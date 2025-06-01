@@ -21,17 +21,17 @@ function add.func(args)
 	end
 
 	-- Check preconditions
-	local custompackages = fileutils.readData(fs.combine(fs.getDir(_G.ccpt.shell.getRunningProgram()),"../../custompackages"),true)
+	local custompackages = fileutils.readData(fs.combine(_G.ccpt.progdir,"custompackages"),true)
 	if not (custompackages[args[2]]==nil) then
 		properprint.pprint("A custom package with the id '" .. args[2] .. "' already exists! Please choose a different one.")
 		return
 	end
-	if not fs.exists(fs.combine(fs.getDir(_G.ccpt.shell.getRunningProgram()),"../../packagedata")) then
+	if not fs.exists(fs.combine(_G.ccpt.progdir,"packagedata")) then
 		properprint.pprint("Package Date is not yet built. Please execute 'ccpt update' first. If this message still apears, thats a bug, please report.")
 	end
 
 	-- Overwrite default packages?
-	if not (fileutils.readData(fs.combine(fs.getDir(_G.ccpt.shell.getRunningProgram()),"../../packagedata"),true)[args[2]]==nil) then
+	if not (fileutils.readData(fs.combine(_G.ccpt.progdir,"packagedata"),true)[args[2]]==nil) then
 		properprint.pprint("A package with the id '" .. args[2] .. "' already exists! This package will be overwritten if you proceed. Do you want to proceed? [y/n]:")
 		if not misc.ynchoice() then
 			return
@@ -40,7 +40,7 @@ function add.func(args)
 
 	-- Add entry in custompackages file
 	custompackages[args[2]] = args[3]
-	fileutils.storeData(fs.combine(fs.getDir(_G.ccpt.shell.getRunningProgram()),"../../custompackages"),custompackages)
+	fileutils.storeData(fs.combine(_G.ccpt.progdir,"custompackages"),custompackages)
 	properprint.pprint("Custom package successfully added!")
 
 	-- Update packagedata?

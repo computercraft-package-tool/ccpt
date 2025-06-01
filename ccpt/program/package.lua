@@ -10,7 +10,7 @@ local package = {}
 	@return boolean installed: Is the package installed?
 ]]--
 function package.isinstalled(packageid)
-	return not (fileutils.readData(fs.combine(fs.getDir(_G.ccpt.shell.getRunningProgram()),"../../installedpackages"),true)[packageid] == nil)
+	return not (fileutils.readData(fs.combine(_G.ccpt.progdir, "installedpackages"),true)[packageid] == nil)
 end
 
 --[[ Checks wether a package is installed
@@ -19,7 +19,7 @@ end
 ]]--
 function package.getpackagedata(packageid)
 	-- Read package data
-	local allpackagedata = fileutils.readData(fs.combine(fs.getDir(_G.ccpt.shell.getRunningProgram()),"../../packagedata"),false)
+	local allpackagedata = fileutils.readData(fs.combine(_G.ccpt.progdir,"packagedata"),false)
 
 	-- Is the package data built yet?
 	if allpackagedata==false then
@@ -35,7 +35,7 @@ function package.getpackagedata(packageid)
 	end
 
 	-- Is the package installed?
-	local installedversion = fileutils.readData(fs.combine(fs.getDir(_G.ccpt.shell.getRunningProgram()),"../../installedpackages"),true)[packageid]
+	local installedversion = fileutils.readData(fs.combine(_G.ccpt.progdir,"installedpackages"),true)[packageid]
 	if not (installedversion==nil) then
 		packagedata["status"] = "installed"
 		packagedata["installedversion"] = installedversion
@@ -54,7 +54,7 @@ end
 function package.checkforupdates(installedpackages,reducedprint)
 	-- If parameters are nil, load defaults
 	reducedprint = reducedprint or false
-	installedpackages = installedpackages or fileutils.readData(fs.combine(fs.getDir(_G.ccpt.shell.getRunningProgram()),"../../installedpackages"),true)
+	installedpackages = installedpackages or fileutils.readData(fs.combine(_G.ccpt.progdir,"installedpackages"),true)
 	
 	misc.bprint("Checking for updates...",reducedprint)
 	

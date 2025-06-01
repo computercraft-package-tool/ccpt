@@ -25,7 +25,7 @@ function update.func(args, startup)
 
 	-- Load custom packages
 	misc.bprint("Reading Custom packages...", startup)
-	local custompackages = fileutils.readData(fs.combine(fs.getDir(_G.ccpt.shell.getRunningProgram()),"../../custompackages"),true)
+	local custompackages = fileutils.readData(fs.combine(_G.ccpt.progdir,"custompackages"),true)
 	-- Add Custom Packages to overall package list
 	for k,v in pairs(custompackages) do
 		packages[k] = v
@@ -43,11 +43,11 @@ function update.func(args, startup)
 		end
 	end
 	misc.bprint("Storing package data of all packages...",startup)
-	fileutils.storeData(fs.combine(fs.getDir(_G.ccpt.shell.getRunningProgram()),"../../packagedata"), packagedata)
+	fileutils.storeData(fs.combine(_G.ccpt.progdir,"packagedata"), packagedata)
 
 	-- Read installed packages
 	misc.bprint("Reading Installed Packages...",startup)
-	local installedpackages = fileutils.readData(fs.combine(fs.getDir(_G.ccpt.shell.getRunningProgram()),"../../installedpackages"),true)
+	local installedpackages = fileutils.readData(fs.combine(_G.ccpt.progdir,"installedpackages"),true)
 	local installedpackagesnew = {}
 	for k,v in pairs(installedpackages) do
 		if packagedata[k]==nil then
@@ -56,7 +56,7 @@ function update.func(args, startup)
 			installedpackagesnew[k] = v
 		end
 	end
-	fileutils.storeData(fs.combine(fs.getDir(_G.ccpt.shell.getRunningProgram()),"../../installedpackages"),installedpackagesnew)
+	fileutils.storeData(fs.combine(_G.ccpt.progdir,"installedpackages"),installedpackagesnew)
 	misc.bprint("Data update complete!",startup)
 	
 	-- Check for updates
