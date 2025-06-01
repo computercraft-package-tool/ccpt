@@ -20,10 +20,14 @@ function autocomplete_helpers.completepackageid(curText, filterstate)
 		installedversion = fileutils.readData(fs.combine(_G.ccpt.progdir, "installedpackages"), true)
 	end
 	for i, _ in pairs(autocompletepackagecache) do
-		if filterstate == "installed" and not (installedversion[i] == nil) then
-			result = autocomplete_common.addtoresultifitfits(i, curText, result)
-		elseif filterstate == "not installed" and installedversion[i] == nil then
-			result = autocomplete_common.addtoresultifitfits(i, curText, result)
+		if filterstate == "installed" then
+			if not (installedversion[i] == nil) then
+				result = autocomplete_common.addtoresultifitfits(i, curText, result)
+			end
+		elseif filterstate == "not installed" then
+			if installedversion[i] == nil then
+				result = autocomplete_common.addtoresultifitfits(i, curText, result)
+			end
 		else
 			result = autocomplete_common.addtoresultifitfits(i, curText, result)
 		end
