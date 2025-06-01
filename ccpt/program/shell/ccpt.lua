@@ -12,8 +12,6 @@ _G.ccpt.progdir = fs.combine(fs.getDir(shell.getRunningProgram()), "../../")
 _G.ccpt.loadmodule = dofile(fs.combine(_G.ccpt.progdir, "program/moduleloader.lua")).loadmodule
 -- Pass shell onto submodules
 _G.ccpt.shell = shell
--- Initialize statcouters array
-_G.ccpt.statcounters = {}
 
 local autocomplete = _G.ccpt.loadmodule("autocomplete/autocomplete")
 local fileutils = _G.ccpt.loadmodule("/lib/fileutils")
