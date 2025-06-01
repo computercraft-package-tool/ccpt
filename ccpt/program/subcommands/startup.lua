@@ -1,5 +1,5 @@
 -- Startup
-local update = dofile(fs.combine(_G.ccpt.progdir, "program/subcommands/update.lua"))
+local update = _G.ccpt.loadmodule("subcommands/update")
 
 local startup = {}
 

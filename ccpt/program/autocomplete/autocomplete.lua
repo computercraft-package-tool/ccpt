@@ -1,6 +1,6 @@
 -- MAIN AUTOCOMLETE FUNCTION --
-local autocomplete_helpers_ccpt = dofile(fs.combine(_G.ccpt.progdir, "program/autocomplete/autocomplete_helpers_ccpt.lua"))
-local misc = dofile(fs.combine(_G.ccpt.progdir, "program/misc.lua"))
+local autocomplete_helpers_ccpt = _G.ccpt.loadmodule("autocomplete/autocomplete_helpers_ccpt")
+local subcommands = _G.ccpt.loadmodule("subcommands")
 
 local autocomplete = {}
 
@@ -14,7 +14,8 @@ local autocomplete_data
 	@return Table completeoptions: Availible complete options
 ]]--
 local function tabcompletehelper(lookup,lastText,curText,iterator)
-	if lookup[lastText[iterator]]==nil then
+	-- If table does not exist or is empty, no autocomplete data is availible
+	if lookup[lastText[iterator]]==nil or next(lookup[lastText[iterator]]) == nil then
 		return {}
 	end
 	if #lastText==iterator then
@@ -36,7 +37,6 @@ local function tabcomplete_errorsafe(shell, parNumber, curText, lastText)
 				next = {}
 			}
 		}
-		local subcommands = misc.loadfolder("program/subcommands")
 		for subcommand_name, subcommand_data in pairs(subcommands) do
 			autocomplete_data.ccpt.next[subcommand_name] = subcommand_data.autocomplete
 		end

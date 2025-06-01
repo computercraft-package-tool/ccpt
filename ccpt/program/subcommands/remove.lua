@@ -1,9 +1,10 @@
 -- Remove
-local autocomplete_helpers_subcommands = dofile(fs.combine(_G.ccpt.progdir, "program/autocomplete/autocomplete_helpers_subcommands.lua"))
-local fileutils = dofile("lib/fileutils.lua")
-local misc = dofile(fs.combine(_G.ccpt.progdir, "program/misc.lua"))
-local properprint = dofile("lib/properprint.lua")
-local update = dofile(fs.combine(_G.ccpt.progdir, "program/subcommands/update.lua"))
+local autocomplete_helpers_subcommands = _G.ccpt.loadmodule("autocomplete/autocomplete_helpers_subcommands")
+local fileutils = _G.ccpt.loadmodule("/lib/fileutils")
+local help = _G.ccpt.loadmodule("subcommands/help")
+local misc = _G.ccpt.loadmodule("misc")
+local properprint = _G.ccpt.loadmodule("/lib/properprint")
+local update = _G.ccpt.loadmodule("subcommands/update")
 
 local remove = {}
 
@@ -40,8 +41,9 @@ function remove.func(args)
 	end
 end
 
-
-remove.comment = "Remove Package URL from local list"
+help.registerinfo("remove", {
+	comment = "Remove Package URL from local list"
+})
 
 remove.autocomplete = {
     func = autocomplete_helpers_subcommands.completecustompackageid,

@@ -1,4 +1,4 @@
-local httputils = dofile("lib/httputils.lua")
+local httputils = _G.ccpt.loadmodule("/lib/httputils")
 
 local script = {}
 

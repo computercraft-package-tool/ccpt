@@ -1,6 +1,6 @@
 -- TAB AUTOCOMLETE HELPER FUNCTIONS --
-local autocomplete_common = dofile(fs.combine(_G.ccpt.progdir, "program/autocomplete/autocomplete_common.lua"))
-local fileutils = dofile("lib/fileutils.lua")
+local autocomplete_common = _G.ccpt.loadmodule("autocomplete/autocomplete_common")
+local fileutils = _G.ccpt.loadmodule("/lib/fileutils")
 
 local autocomplete_helpers = {}
 

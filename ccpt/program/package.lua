@@ -1,7 +1,7 @@
 -- PACKAGE FUNCTIONS --
-local fileutils = dofile("lib/fileutils.lua")
-local misc = dofile(fs.combine(_G.ccpt.progdir, "program/misc.lua"))
-local properprint = dofile("lib/properprint.lua")
+local fileutils = _G.ccpt.loadmodule("/lib/fileutils")
+local misc = _G.ccpt.loadmodule("misc")
+local properprint = _G.ccpt.loadmodule("/lib/properprint")
 
 local package = {}
 

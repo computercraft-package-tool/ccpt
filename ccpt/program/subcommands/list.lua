@@ -1,6 +1,7 @@
 -- List
-local fileutils = dofile("lib/fileutils.lua")
-local properprint = dofile("lib/properprint.lua")
+local fileutils = _G.ccpt.loadmodule("/lib/fileutils")
+local help = _G.ccpt.loadmodule("subcommands/help")
+local properprint = _G.ccpt.loadmodule("/lib/properprint")
 
 local list = {}
 
@@ -35,6 +36,10 @@ function list.func(args)
 	end
 end
 
-list.comment = "List installed and able to install Packages"
+help.registerinfo("list", {
+	comment = "List installed and able to install Packages"
+})
+
+list.autocomplete = {}
 
 return list

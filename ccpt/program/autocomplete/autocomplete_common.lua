@@ -1,4 +1,4 @@
-local misc = dofile(fs.combine(_G.ccpt.progdir, "program/misc.lua"))
+local misc = _G.ccpt.loadmodule("misc")
 
 local autocomplete_common = {}
 

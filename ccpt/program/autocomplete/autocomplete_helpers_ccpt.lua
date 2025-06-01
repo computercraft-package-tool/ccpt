@@ -1,5 +1,5 @@
-local autocomplete_common = dofile(fs.combine(_G.ccpt.progdir, "program/autocomplete/autocomplete_common.lua"))
-local misc = dofile(fs.combine(_G.ccpt.progdir, "program/misc.lua"))
+local autocomplete_common = _G.ccpt.loadmodule("autocomplete/autocomplete_common")
+local subcommands = _G.ccpt.loadmodule("subcommands")
 
 local autocomplete_helpers_ccpt = {}
 
@@ -10,11 +10,10 @@ local completable_subcommands
 function autocomplete_helpers_ccpt.completeaction(curText)
 	if completable_subcommands == nil then
         completable_subcommands = {}
-        local subcommands = misc.loadfolder("program/subcommands")
 
 		for subcommand_name, subcommand_data in pairs(subcommands) do
             -- Autocomplete only commmands which also appear in 'ccpt help'
-            if (not (subcommand_data["comment"] == nil)) then
+            if (not (subcommand_data["autocomplete"] == nil)) then
                 table.insert(completable_subcommands, subcommand_name)
             end
 		end

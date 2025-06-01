@@ -1,12 +1,12 @@
 -- Uninstall
-local autocomplete_helpers_subcommands = dofile(fs.combine(_G.ccpt.progdir, "program/autocomplete/autocomplete_helpers_subcommands.lua"))
-local fileutils = dofile("lib/fileutils.lua")
-local misc = dofile(fs.combine(_G.ccpt.progdir, "program/misc.lua"))
-local package = dofile(fs.combine(_G.ccpt.progdir, "program/package.lua"))
-local properprint = dofile("lib/properprint.lua")
-local statcounters = dofile(fs.combine(_G.ccpt.progdir, "program/statcounters.lua"))
-
-local installtypes = misc.loadfolder("program/installtypes")
+local autocomplete_helpers_subcommands = _G.ccpt.loadmodule("autocomplete/autocomplete_helpers_subcommands")
+local fileutils = _G.ccpt.loadmodule("/lib/fileutils")
+local help = _G.ccpt.loadmodule("subcommands/help")
+local installtypes = _G.ccpt.loadmodule("installtypes")
+local misc = _G.ccpt.loadmodule("misc")
+local package = _G.ccpt.loadmodule("package")
+local properprint = _G.ccpt.loadmodule("/lib/properprint")
+local statcounters = _G.ccpt.loadmodule("statcounters")
 
 local uninstall = {}
 
@@ -114,7 +114,9 @@ function uninstall.func(args)
 	end
 end
 
-uninstall.comment = "Remove installed Packages"
+help.registerinfo("uninstall", {
+	comment = "Remove installed Packages"
+})
 
 uninstall.autocomplete = {
     func = autocomplete_helpers_subcommands.completepackageid,

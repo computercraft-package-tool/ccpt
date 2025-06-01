@@ -8,22 +8,24 @@
 _G.ccpt = {}
 -- Set program directory
 _G.ccpt.progdir = fs.combine(fs.getDir(shell.getRunningProgram()), "../../")
+-- Init submodule loader
+_G.ccpt.loadmodule = dofile(fs.combine(_G.ccpt.progdir, "program/moduleloader.lua")).loadmodule
 -- Pass shell onto submodules
 _G.ccpt.shell = shell
 -- Initialize statcouters array
 _G.ccpt.statcounters = {}
 
-local autocomplete = dofile(fs.combine(_G.ccpt.progdir, "program/autocomplete/autocomplete.lua"))
-local fileutils = dofile("lib/fileutils.lua")
-local misc = dofile(fs.combine(_G.ccpt.progdir, "program/misc.lua"))
-local properprint = dofile("lib/properprint.lua")
-local statcounters = dofile(fs.combine(_G.ccpt.progdir, "program/statcounters.lua"))
+local autocomplete = _G.ccpt.loadmodule("autocomplete/autocomplete")
+local fileutils = _G.ccpt.loadmodule("/lib/fileutils")
+local misc = _G.ccpt.loadmodule("misc")
+local properprint = _G.ccpt.loadmodule("/lib/properprint")
+local statcounters = _G.ccpt.loadmodule("statcounters")
 
 -- Read arguments
 local args = {...}
 
 -- Load variable submodules for subcommands
-local subcommands = misc.loadfolder("program/subcommands")
+local subcommands = _G.ccpt.loadmodule("subcommands")
 
 -- Add to working path
 local workingpathentry = ":" .. fs.combine(_G.ccpt.progdir, "program/shell")

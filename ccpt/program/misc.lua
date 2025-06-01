@@ -1,5 +1,5 @@
 -- MISC HELPER FUNCTIONS --
-local properprint = dofile("lib/properprint.lua")
+local properprint = _G.ccpt.loadmodule("/lib/properprint")
 
 local misc = {}
 
@@ -71,20 +71,6 @@ function misc.splitstr(inputstr, sep)
       table.insert(t, str)
     end
     return t
-end
-
-function misc.loadfolder(relfolderpath, excludefiles)
-    excludefiles = excludefiles or {}
-
-    local absfolderpath = fs.combine(_G.ccpt.progdir, relfolderpath)
-    local modules = {}
-    for i, v in ipairs(fs.list(absfolderpath)) do
-        local modulename = misc.splitstr(v, ".")[1]
-        if excludefiles[modulename] == nil then
-            modules[modulename] = dofile(fs.combine(absfolderpath, v))
-        end
-    end
-    return modules
 end
 
 return misc

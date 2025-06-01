@@ -1,10 +1,9 @@
 -- Info
-local autocomplete_helpers_subcommands = dofile(fs.combine(_G.ccpt.progdir, "program/autocomplete/autocomplete_helpers_subcommands.lua"))
-local misc = dofile(fs.combine(_G.ccpt.progdir, "program/misc.lua"))
-local package = dofile(fs.combine(_G.ccpt.progdir, "program/package.lua"))
-local properprint = dofile("lib/properprint.lua")
-
-local installtypes = misc.loadfolder("program/installtypes")
+local autocomplete_helpers_subcommands = _G.ccpt.loadmodule("autocomplete/autocomplete_helpers_subcommands")
+local help = _G.ccpt.loadmodule("subcommands/help")
+local installtypes = _G.ccpt.loadmodule("installtypes")
+local package = _G.ccpt.loadmodule("package")
+local properprint = _G.ccpt.loadmodule("/lib/properprint")
 
 local info = {}
 
@@ -37,7 +36,9 @@ function info.func(args)
 	end
 end
 
-info.comment = "Information about a package"
+help.registerinfo("info", {
+	comment = "Information about a package"
+})
 
 info.autocomplete = {
     func = autocomplete_helpers_subcommands.completepackageid,

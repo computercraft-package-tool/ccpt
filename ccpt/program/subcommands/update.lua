@@ -1,9 +1,10 @@
 -- Update
-local misc = dofile(fs.combine(_G.ccpt.progdir, "program/misc.lua"))
-local fileutils = dofile("lib/fileutils.lua")
-local httputils = dofile("lib/httputils.lua")
-local package = dofile(fs.combine(_G.ccpt.progdir, "program/package.lua"))
-local properprint = dofile("lib/properprint.lua")
+local fileutils = _G.ccpt.loadmodule("/lib/fileutils")
+local help = _G.ccpt.loadmodule("subcommands/help")
+local httputils = _G.ccpt.loadmodule("/lib/httputils")
+local misc = _G.ccpt.loadmodule("misc")
+local package = _G.ccpt.loadmodule("package")
+local properprint = _G.ccpt.loadmodule("/lib/properprint")
 
 local update = {}
 
@@ -62,6 +63,10 @@ function update.func(args, startup)
 	package.checkforupdates(installedpackagesnew, startup)
 end
 
-update.comment = "Search for new Versions & Packages"
+help.registerinfo("update", {
+	comment = "Search for new Versions & Packages"
+})
+
+update.autocomplete = {}
 
 return update

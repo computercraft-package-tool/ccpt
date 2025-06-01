@@ -1,5 +1,5 @@
 -- Idk randomly appeared one day
-local properprint = dofile("lib/properprint.lua")
+local properprint = _G.ccpt.loadmodule("/lib/properprint")
 
 local zzzzzz = {}
 

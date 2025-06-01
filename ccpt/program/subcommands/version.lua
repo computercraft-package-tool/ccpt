@@ -1,5 +1,6 @@
 -- Version
-local properprint = dofile("lib/properprint.lua")
+local help = _G.ccpt.loadmodule("subcommands/help")
+local properprint = _G.ccpt.loadmodule("/lib/properprint")
 
 local version = {}
 
@@ -12,6 +13,10 @@ function version.func(args)
 	properprint.pprint("Version: 1.0")
 end
 
-version.comment = "Print CCPT Version"
+help.registerinfo("version", {
+	comment = "Print CCPT Version"
+})
+
+version.autocomplete = {}
 
 return version

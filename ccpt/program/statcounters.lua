@@ -1,8 +1,8 @@
-local properprint = dofile("lib/properprint.lua")
+local properprint = _G.ccpt.loadmodule("/lib/properprint")
 
 local statcounters = {}
 
-local printorder = {"installed", "updated", "removed"}
+local printorder = {"installed", "upgraded", "removed"}
 
 function statcounters.increasecounter(action, amount)
     amount = amount or 1

@@ -1,8 +1,9 @@
 -- Add
-local fileutils = dofile("lib/fileutils.lua")
-local misc = dofile(fs.combine(_G.ccpt.progdir, "program/misc.lua"))
-local properprint = dofile("lib/properprint.lua")
-local update = dofile(fs.combine(_G.ccpt.progdir, "program/subcommands/update.lua"))
+local fileutils = _G.ccpt.loadmodule("/lib/fileutils")
+local help = _G.ccpt.loadmodule("subcommands/help")
+local misc = _G.ccpt.loadmodule("misc")
+local properprint = _G.ccpt.loadmodule("/lib/properprint")
+local update = _G.ccpt.loadmodule("subcommands/update")
 
 local add = {}
 
@@ -49,6 +50,10 @@ function add.func(args)
 	end
 end
 
-add.comment = "Add Package URL to local list"
+help.registerinfo("add", {
+	comment = "Add Package URL to local list"
+})
+
+add.autocomplete = {}
 
 return add
