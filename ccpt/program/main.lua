@@ -7,7 +7,7 @@
 -- Initialize global ccpt namespace
 _G.ccpt = {}
 -- Set program directory
-_G.ccpt.progdir = fs.combine(fs.getDir(shell.getRunningProgram()), "../../")
+_G.ccpt.progdir = fs.combine(fs.getDir(shell.getRunningProgram()), "../")
 -- Init submodule loader
 _G.ccpt.loadmodule = dofile(fs.combine(_G.ccpt.progdir, "program/moduleloader.lua")).loadmodule
 -- Pass shell onto submodules
@@ -32,7 +32,7 @@ if string.find(shell.path(), misc.regexEscape(workingpathentry)) == nil then
 end
 
 -- Register autocomplete function
-shell.setCompletionFunction(shell.getRunningProgram(), autocomplete.tabcomplete)
+shell.setCompletionFunction(fs.combine(_G.ccpt.progdir, "program/shell/ccpt"), autocomplete.tabcomplete)
 
 -- Add to startup file to run at startup
 local startup = fileutils.readFile("startup","") or ""
