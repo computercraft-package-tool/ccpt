@@ -2,33 +2,30 @@ local httputils = _G.ccpt.loadmodule("/lib/httputils")
 
 local script = {}
 
-function script.install(installdata)
-	local result = httputils.downloadfile(fs.combine(fs.getDir(_G.ccpt.shell.getRunningProgram()),"../../tempinstaller"),installdata["scripturl"])
+local function runtempinstaller(installdata, args)
+	local tempinstallerpath = fs.combine(_G.ccpt.progdir, "tempinstaller")
+
+	-- Download script
+	local result = httputils.downloadfile(tempinstallerpath, installdata["scripturl"])
 	if result==false then
 		return false
 	end
-	_G.ccpt.shell.run(fs.combine(fs.getDir(_G.ccpt.shell.getRunningProgram()),"../../tempinstaller"),"install")
-	fs.delete(fs.combine(fs.getDir(_G.ccpt.shell.getRunningProgram()),"../../tempinstaller"))
+	-- Run script
+	_G.ccpt.shell.run(tempinstallerpath, unpack(args))
+	-- Delete script
+	fs.delete(tempinstallerpath)
 end
 
---[[ Different install methodes require different update methodes
-]]--
+function script.install(installdata)
+	runtempinstaller(installdata, {"install"})
+end
+
 function script.update(installdata)
-	local result = httputils.downloadfile(fs.combine(fs.getDir(_G.ccpt.shell.getRunningProgram()),"../../tempinstaller"),installdata["scripturl"])
-	if result==false then
-		return false
-	end
-	_G.ccpt.shell.run(fs.combine(fs.getDir(_G.ccpt.shell.getRunningProgram()),"../../tempinstaller"),"update")
-	fs.delete(fs.combine(fs.getDir(_G.ccpt.shell.getRunningProgram()),"../../tempinstaller"))
+	runtempinstaller(installdata, {"update"})
 end
 
 function script.remove(installdata)
-	local result = httputils.downloadfile(fs.combine(fs.getDir(_G.ccpt.shell.getRunningProgram()),"../../tempinstaller"),installdata["scripturl"])
-	if result==false then
-		return false
-	end
-	_G.ccpt.shell.run(fs.combine(fs.getDir(_G.ccpt.shell.getRunningProgram()),"../../tempinstaller"),"remove")
-	fs.delete(fs.combine(fs.getDir(_G.ccpt.shell.getRunningProgram()),"../../tempinstaller"))
+	runtempinstaller(installdata, {"remove"})
 end
 
 script.desc = "Programm installed via Installer"
