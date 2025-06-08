@@ -1,1 +1,9 @@
+--[[ 
+	Main entry point for the shell command
+    This has the purpose of passing execution on to another file with the '.lua'-extension, as in old ComputerCraft versions, the extension is not ignored when execution a command (e.g. if the file is named 'ccpt.lua', the command 'ccpt' would not be found).
+
+	Authors: PentagonLP 2025
+]]
+
+-- Load and execute 'main.lua', passing on all arguments
 shell.run(fs.combine(fs.getDir(shell.getRunningProgram()), "../main.lua"), unpack({...}))
