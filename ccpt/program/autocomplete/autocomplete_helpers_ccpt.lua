@@ -1,5 +1,5 @@
 --[[ 
-	Module to provide functions hat the main.lua file needs to autocomplete the main command
+	Module to provide functions that the main.lua file needs to autocomplete the main command
 
 	Authors: PentagonLP 2021, 2025
 	@module autocomplete_helpers_ccpt

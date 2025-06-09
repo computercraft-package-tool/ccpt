@@ -12,8 +12,23 @@ ccpt
 | - CONTRIBUTING.md: This file :)  
 | - LICENSE: License file under which ccpt is published   
 | - README.md: Readme file for this repo  
-| - ccpt: Main code file for CCPT (lua)  
-| - ccptinstall.lua: Installer for CCPT (also hosted on pastebin) (lua)  
+| - ccpt: Program directory for CCPT, as it would be layed out in an actual installation
+|   \ - program: Source files for CCPT
+|       | - autocomplete: Source files for the autocomplete sytem
+|       |   | - <modulename>.lua
+|       |   \ - ...
+|       | - installtypes: Source files to implement the different installtypes, each in its own module
+|       |   | - <modulename>.lua
+|       |   \ - ...
+|       | - shell: Directory added to 'shell.path()'; houses the entry point for all availible commands
+|       |   | - <command>
+|       |   \ - ...
+|       | - subcommands: Source files to implement the different subcommands, each in its own module
+|       |   | - <modulename>.lua
+|       |   \ - ...
+|       | - <modulename>.lua: Other modules shared by the whole program
+|       \ - ...
+| - ccptinstall.lua: Installer for CCPT (also hosted on pastebin)  
 | - defaultpackages.ccpt: List of default packages able to be installed  
 | - packageinfo.ccpt: packageinfo file for ccpt  
 |  

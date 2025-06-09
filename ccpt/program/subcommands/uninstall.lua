@@ -72,7 +72,7 @@ function uninstall.func(args)
 		return
 	end
 
-	-- Check witch package(s) to remove (A package dependend on a package that's about to get removed is also removed)
+	-- Check wich package(s) to remove (A package dependend on a package that's about to get removed is also removed)
 	local packagestoremove = getpackagestoremove(args[2], packageinfo,
 		fileutils.readData(fs.combine(_G.ccpt.progdir, "installedpackages"), true), {})
 	if not (type(packagestoremove) == "table") then
@@ -100,7 +100,7 @@ function uninstall.func(args)
 		end
 	end
 
-	-- If cctp would be removed in the process, tell the user that that's a dump idea. But I mean, who am I to stop him, I guess...
+	-- If cctp would be removed in the process, tell the user that that's a dump idea. But I mean, who are we to stop them, I guess...
 	for k, _ in pairs(packagestoremove) do
 		if k == "ccpt" then
 			if args[2] == "ccpt" then

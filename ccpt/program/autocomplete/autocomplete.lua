@@ -27,7 +27,7 @@ local autocomplete_data
 --[[ Recursive function to go through the 'autocomplete' array and complete commands accordingly
 	@tparam autocomplete_lookup lookup Part of the 'autocomplete' array to look autocomplete up in
 	@tparam string lastText Numeric array of parameters before the current one
-	@tparam string curText The already typed in text to.. complete...
+	@tparam string curText The already typed in text to complete
 	@tparam int iterator Last position in the lookup array
 	@treturn {string,...} Availible complete options
 ]]
