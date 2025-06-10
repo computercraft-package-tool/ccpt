@@ -1,4 +1,4 @@
 # Set ccpt language to lua
-ccpt linguist-language=lua
+ccpt/program/shell/ccpt linguist-language=lua
 # Auto detect text files and perform LF normalization
 * text=auto

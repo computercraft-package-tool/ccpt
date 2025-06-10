@@ -4,6 +4,11 @@
 	Version: 1.1
 ]]
 
+print("ERROR: Installer out of order!")
+print("This version of the installer no longer works with #3. It is awaiting an almost complete rewrite, which will be implemented with #7.")
+print("If you want to install the developement version before that, just copy the folder \"/ccpt\" in the repository to \"/prg/ccpt/\" on your CraftOS instance, and execute \"/prg/ccpt/progran/shell/ccpt.lua\" once to set the path variable and generate the startup entry.")
+error()
+
 -- Read arguments
 args = {...}
 

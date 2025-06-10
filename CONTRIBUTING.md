@@ -12,8 +12,23 @@ ccpt
 | - CONTRIBUTING.md: This file :)  
 | - LICENSE: License file under which ccpt is published   
 | - README.md: Readme file for this repo  
-| - ccpt: Main code file for CCPT (lua)  
-| - ccptinstall.lua: Installer for CCPT (also hosted on pastebin) (lua)  
+| - ccpt: Program directory for CCPT, as it would be layed out in an actual installation
+|   \ - program: Source files for CCPT
+|       | - autocomplete: Source files for the autocomplete sytem
+|       |   | - <modulename>.lua
+|       |   \ - ...
+|       | - installtypes: Source files to implement the different installtypes, each in its own module
+|       |   | - <modulename>.lua
+|       |   \ - ...
+|       | - shell: Directory added to 'shell.path()'; houses the entry point for all availible commands
+|       |   | - <command>
+|       |   \ - ...
+|       | - subcommands: Source files to implement the different subcommands, each in its own module
+|       |   | - <modulename>.lua
+|       |   \ - ...
+|       | - <modulename>.lua: Other modules shared by the whole program
+|       \ - ...
+| - ccptinstall.lua: Installer for CCPT (also hosted on pastebin)  
 | - defaultpackages.ccpt: List of default packages able to be installed  
 | - packageinfo.ccpt: packageinfo file for ccpt  
 |  
@@ -34,30 +49,48 @@ ccpt
 ```
 
 ## Code structure
-- Every codefile must have the following comment ad the first few lines:
+- If not specified otherwise in the following, [the comment structure used by LDoc](https://stevedonovan.github.io/ldoc/manual/doc.md.html) is used. Other features of LDoc (like e.g. module IDs) are currently not implemented.
+- Every codefile must have the following comment making up the first few lines:
 ```lua
 --[[ 
-	<Title/file function>
-	Author: <Original author>
-	Version: <Corresponding ccpt version or file version if the file is not directly related to a ccpt version (eg. installer)>
+	<Purpose/function of the file>
+
+	Authors: <GitHub username> <year(s), ranges allowed>
+			 <GitHub username> <year(s), ranges allowed>
+			 ...
+	<@module-tag if required for this file>
 ]]
 ```
-- All functions must be members of a group, containing one or more functions. These functions must be below each other. Every Group has a comment with tha gruop name/function at the beginning:
+- Modules should announce the beginnning and end of their implementation code, using the comments ```## START OF MODULE ##``` and ```## END OF MODULE ##``` as delimiters:
 ```lua
--- <Description/name> --
-```
-- Every function definition must begin with the following comment:
-```lua
---[[ <Description of what the function does>
-	@param <parameter type> <name>: <description what it is for/what it does>
-	(1 line per parameter)
+--[[
+	<File header comment>
+]]
+
+-- Load module dependencies
+local mydependency = _G.ccpt.loadmodule(...)
+...
+
+-- Module interface table
+local interfacetable = {}
+
+-- ## START OF MODULE ##
+
+--[[
+	<Function header comment>
+]]
+function interfacetable.myfunction()
 	...
-	@return <variable type> <name>: <description of what is returned>
-	(1 line per returned variable)
-	...
---]]
+end
+
+...
+
+-- ## END OF MODULE ##
+
+return interfacetable
 ```
-- All functions that don't just do one thing (eg. reading a file or writing something in console) but follow different steps, one after the other (like first fetch a file, then store it somewhere) to achive a result, must have these different steps commented.
+- All functions that don't just do one thing, but follow different steps, one after the other (like first fetch a file, then store it somewhere) in order to achive a result, must have these different steps commented.
 ## Dealing with issues
 The first thing to do when dealing with an issue is always to write a comment that you are dealing with the issue so that no issue is dealt with by two people at the same time!
 ## Process applies for default package list
+TODO
